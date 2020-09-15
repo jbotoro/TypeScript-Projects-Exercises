@@ -5,6 +5,9 @@
 // const AUTHOR = 2;
 
 enum Role { ADMIN, READ_ONLY, AUTHOR};
+// enum by default gives sequential numbers to the properties ie ADMIN = 0, READ_ONLY = 1 etc
+// but you can reassign to anything like this
+// enum Role {ADMIN = 'admin', READ_ONLY = 100, AUTHOR = 500} etc
 
 
 // const person: {
