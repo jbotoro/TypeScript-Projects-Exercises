@@ -1,13 +1,25 @@
-const person: {
-    name: string;
-    age: number;
-    hobbies: string[];
-    role: [number, string];
-} = {
+
+// this is a fine convention but can be improved via enum
+// const ADMIN = 0;
+// const READ_ONLY = 1;
+// const AUTHOR = 2;
+
+enum Role { ADMIN, READ_ONLY, AUTHOR};
+
+
+// const person: {
+//     name: string;
+//     age: number;
+//     hobbies: string[];
+//     role: [number, string];
+// } 
+const person = {
     name: 'Jordan',
     age: 30,
     hobbies: ['Sports', 'Video Games'],
-    role: [2, 'Software Engineer']
+    // role: ADMIN
+    // above ok when not using enum
+    role: Role.ADMIN
 };
 
 // person.role.push('admin');
@@ -28,5 +40,9 @@ for (const hobby of person.hobbies) {
     // Typescript type inference helps detect that map does not work on a string
     // so map cannot be called a hobby bc its a string not an array
     // console.log(hobby.map())
+}
+
+if (person.role === Role.ADMIN){
+    console.log('is admin')
 }
 
