@@ -3,12 +3,17 @@
 // additionally we add runtime type check to make sure we have different
 // functionality based on the type of input
 
+// using Type aliases combined with custom types we can make code cleaner in the 
+// combine function
+type Combinable = number | string;
+type ConversionDescriptor = 'as-number' | 'as-text'
+
 function combine(
-    input1: number | string, 
-    input2: number | string, 
+    input1: Combinable, 
+    input2: Combinable, 
     // literal type used here with union types so that any typos with as-number 
     //or as-text are detected by TypeScript
-    resultType: 'as-number' | 'as-text'){
+    resultType: ConversionDescriptor){
     let result;
 
     // runtime type check below
