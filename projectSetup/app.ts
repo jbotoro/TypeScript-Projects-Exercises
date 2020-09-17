@@ -1,25 +1,18 @@
-function add(n1: number, n2: number){
-    return n1 + n2;
+let userInput: unknown;
+let userName: string;
+
+userInput = 5;
+userInput = 'Max';
+//if using unknown type an extra type check is required
+// before you can assign to userName to equal userInput
+if (typeof userInput === 'string'){
+    userName = userInput
+};
+
+function generateError(message: string, code: number): never {
+    throw {message: message, errorCode: code};
+    // never can also be used with a while(true) infinite loop
+    // bc it will never return anything
 }
 
-function printResult(num: number): void {
-    console.log('Result: ' + num);
-}
-
-function addAndHandle(n1: number, n2: number, cb: (num: number) => void ) {
-    const result = n1 + n2;
-    cb(result);
-}
-
-printResult(add(5, 12));
-
-let combineValues: (a:number, b:number) => number;
-
-combineValues = add;
-// combineValues = 5;
-
-console.log(combineValues(8,8));
-
-addAndHandle(10, 20, (result) => {
-    console.log(result);
-});
+generateError('An error occured!', 500);
