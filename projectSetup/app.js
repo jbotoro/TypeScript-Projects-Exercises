@@ -10,5 +10,7 @@ if (typeof userInput === 'string') {
 ;
 function generateError(message, code) {
     throw { message: message, errorCode: code };
+    // never can also be used with a while(true) infinite loop
+    // bc it will never return anything
 }
 generateError('An error occured!', 500);
