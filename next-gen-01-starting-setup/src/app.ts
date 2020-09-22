@@ -26,7 +26,10 @@ age = 31;
 //     return a + b;
 // }
 
-const add = (a: number, b: number) => a + b;
+// default arguments like that seen in b need to be the last parameter
+// i.e. if you made a have a default it would not work like below
+//const add = (a: number = 1, b: number ) => a + b;
+const add = (a: number, b: number = 1) => a + b;
 
 console.log(add(2, 5));
 
@@ -36,8 +39,21 @@ console.log(add(2, 5));
 const printOutput: (a: number | string) => void = output => console.log(output);
 
 const button = document.querySelector('button');
+
 if (button) {
     button.addEventListener('click', event => console.log(event))
 }
 
-printOutput(add(5, 2));
+printOutput(add(5));
+
+const hobbies = ['Soccer', 'League'];
+const activeHobbies = ['Biking'];
+
+activeHobbies.push(...hobbies);
+
+const person = {
+    name: 'Jordan',
+    age: 30
+};
+
+const copiedPerson = {...person};
