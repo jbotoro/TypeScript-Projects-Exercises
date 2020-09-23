@@ -5,7 +5,7 @@ class Department {
 
     // readonly keyword makes it so you can't rewrite to that variable
     // i.e. use it when the property will never change or you dont want it to
-    
+
     constructor(private readonly id: string, public name: string) {
         // this.id = id;
         // this.name = n;
@@ -25,11 +25,35 @@ class Department {
     }
 }
 
-const engineering = new Department( 'D1','Engineering');
+//class inheritance
+
+class ITDepartment extends Department {
+
+    constructor(id: string, public admins: string[]){
+        super(id, 'IT');
+    }
+}
+
+class AccountingDepartment extends Department {
+    constructor(id: string, private reports: string[]) {
+        super(id, 'Accounting')
+    }
+
+    addReport(text: string) {
+        this.reports.push(text);
+    }
+
+    printReports() {
+        console.log(this.reports);
+    }
+}
+
+
+const it = new ITDepartment( 'D1', ['Jordan']);
 // console.log(engineering);
 
-engineering.addEmployee('Jordan');
-engineering.addEmployee('Ashley');
+it.addEmployee('Jordan');
+it.addEmployee('Ashley');
 
 // to ensure that employees are added in a uniform way
 // i.e. only added using the addEmployee function
@@ -38,9 +62,14 @@ engineering.addEmployee('Ashley');
 // and making things like the insertion method below, invalid.
 // engineering.employees[2] = 'Bella';
 
-engineering.describe();
-engineering.printEmployeeInformation();
+it.describe();
+it.printEmployeeInformation();
+console.log(it);
 
+
+const accounting = new AccountingDepartment('D2', []);
+accounting.addReport('Something went wrong...')
+accounting.printReports();
 // const engineeringCopy = { describe: engineering.describe }
 // // by utilizing a class type on this we can avoid scenarios
 // // where this is not referring to what we think it will
