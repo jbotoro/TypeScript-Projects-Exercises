@@ -1,7 +1,9 @@
 class Department {
     // private id: string;
     // private name: string ;
-    private employees: string[] = [];
+    //protected is like private but also extends to classes that inherit
+    // from Department class
+    protected employees: string[] = [];
 
     // readonly keyword makes it so you can't rewrite to that variable
     // i.e. use it when the property will never change or you dont want it to
@@ -16,6 +18,7 @@ class Department {
     }
 
     addEmployee(employee: string) {
+
         this.employees.push(employee);
     }
 
@@ -37,6 +40,16 @@ class ITDepartment extends Department {
 class AccountingDepartment extends Department {
     constructor(id: string, private reports: string[]) {
         super(id, 'Accounting')
+    }
+
+    addEmployee(name: string) {
+        if (name === 'Jordan'){
+            return;
+        }
+        // by using protected instead of private in the Department class
+        // it allows our AccountingDepartment class which inherits from
+        // the Department class to have access to the employees array
+        this.employees.push(name);
     }
 
     addReport(text: string) {
@@ -68,7 +81,11 @@ console.log(it);
 
 
 const accounting = new AccountingDepartment('D2', []);
-accounting.addReport('Something went wrong...')
+accounting.addEmployee('Jordan');
+accounting.addEmployee('Gareth');
+accounting.addReport('Something went wrong...');
+
+accounting.printEmployeeInformation();
 accounting.printReports();
 // const engineeringCopy = { describe: engineering.describe }
 // // by utilizing a class type on this we can avoid scenarios
