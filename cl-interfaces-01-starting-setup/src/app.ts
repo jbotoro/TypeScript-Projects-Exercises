@@ -3,7 +3,10 @@ class Department {
     // private name: string ;
     private employees: string[] = [];
 
-    constructor(private id: string, public name: string) {
+    // readonly keyword makes it so you can't rewrite to that variable
+    // i.e. use it when the property will never change or you dont want it to
+    
+    constructor(private readonly id: string, public name: string) {
         // this.id = id;
         // this.name = n;
     }
