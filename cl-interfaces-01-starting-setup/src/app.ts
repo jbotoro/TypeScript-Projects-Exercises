@@ -1,4 +1,4 @@
-class Department {
+abstract class Department {
     // private id: string;
     // private name: string ;
     //protected is like private but also extends to classes that inherit
@@ -10,7 +10,7 @@ class Department {
     // readonly keyword makes it so you can't rewrite to that variable
     // i.e. use it when the property will never change or you dont want it to
 
-    constructor(private readonly id: string, public name: string) {
+    constructor(protected readonly id: string, public name: string) {
         // this.id = id;
         // this.name = n;
     }
@@ -19,9 +19,7 @@ class Department {
         return {name: name}
     }
 
-    describe(this: Department) {
-        console.log(`Department (${this.id}): ${this.name}` )
-    }
+    abstract describe(this: Department): void;
 
     addEmployee(employee: string) {
 
@@ -37,9 +35,15 @@ class Department {
 //class inheritance
 
 class ITDepartment extends Department {
+    admins: string[];
 
-    constructor(id: string, public admins: string[]){
+    constructor(id: string, admins: string[]){
         super(id, 'IT');
+        this.admins = admins;
+    }
+
+    describe(){
+        console.log('IT Department - ID: ' + this.id) 
     }
 }
 
@@ -66,6 +70,10 @@ class AccountingDepartment extends Department {
     constructor(id: string, private reports: string[]) {
         super(id, 'Accounting')
         this.lastReport = reports[0];
+    }
+
+    describe() {
+        console.log('Accounting Department - ID: ' + this.id)
     }
 
     addEmployee(name: string) {
@@ -113,16 +121,18 @@ console.log(it);
 
 const accounting = new AccountingDepartment('D2', []);
 
-accounting.mostRecentReport = '';
-accounting.addReport('Something went wrong...');
-console.log(accounting.mostRecentReport);
+// accounting.mostRecentReport = '';
+// accounting.addReport('Something went wrong...');
+// console.log(accounting.mostRecentReport);
 
 accounting.addEmployee('Jordan');
 accounting.addEmployee('Gareth');
 
 
-accounting.printEmployeeInformation();
-accounting.printReports();
+accounting.describe();
+
+// accounting.printEmployeeInformation();
+// accounting.printReports();
 // const engineeringCopy = { describe: engineering.describe }
 // // by utilizing a class type on this we can avoid scenarios
 // // where this is not referring to what we think it will
