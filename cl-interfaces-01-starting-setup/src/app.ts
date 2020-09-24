@@ -3,6 +3,8 @@ class Department {
     // private name: string ;
     //protected is like private but also extends to classes that inherit
     // from Department class
+    static fiscalYear = 2020;
+
     protected employees: string[] = [];
 
     // readonly keyword makes it so you can't rewrite to that variable
@@ -11,6 +13,10 @@ class Department {
     constructor(private readonly id: string, public name: string) {
         // this.id = id;
         // this.name = n;
+    }
+
+    static createEmployee(name: string) {
+        return {name: name}
     }
 
     describe(this: Department) {
@@ -83,8 +89,12 @@ class AccountingDepartment extends Department {
 }
 
 
+const employee1 = Department.createEmployee('Max');
+console.log(employee1, Department.fiscalYear);
+
 const it = new ITDepartment( 'D1', ['Jordan']);
 // console.log(engineering);
+
 
 it.addEmployee('Jordan');
 it.addEmployee('Ashley');
