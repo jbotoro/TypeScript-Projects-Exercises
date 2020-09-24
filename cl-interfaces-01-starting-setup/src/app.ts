@@ -50,6 +50,7 @@ class ITDepartment extends Department {
 class AccountingDepartment extends Department {
 
     private lastReport: string;
+    private static instance: AccountingDepartment;
 
     get mostRecentReport() {
         if (this.lastReport){
@@ -67,9 +68,21 @@ class AccountingDepartment extends Department {
         this.addReport(value);
     }
 
-    constructor(id: string, private reports: string[]) {
+    private constructor(id: string, private reports: string[]) {
         super(id, 'Accounting')
         this.lastReport = reports[0];
+    }
+
+
+    // using private constructor the singleton pattern can be implemented
+    // to ensure only one instance of the Object exists at any one time
+    static getInstance() {
+        if(this.instance){
+            return this.instance;
+        }
+
+        this.instance = new AccountingDepartment('D2', [])
+        return this.instance;
     }
 
     describe() {
@@ -119,7 +132,7 @@ it.printEmployeeInformation();
 console.log(it);
 
 
-const accounting = new AccountingDepartment('D2', []);
+const accounting = AccountingDepartment.getInstance();
 
 // accounting.mostRecentReport = '';
 // accounting.addReport('Something went wrong...');
