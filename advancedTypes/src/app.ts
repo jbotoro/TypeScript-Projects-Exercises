@@ -91,3 +91,6 @@ function useVehicle(vehicle: Vehicle){
         vehicle.loadCargo(1000)
     }
 }
+
+useVehicle(v1);
+useVehicle(v2);
