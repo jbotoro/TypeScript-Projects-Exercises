@@ -11,7 +11,9 @@ add = (n1: number, n2: number) => {
 }
 
 interface Named {
-    readonly name: string;
+    readonly name?: string;
+    //use ? after property name to designate as an optional property
+    outputName?: string;
 }
 
 interface Greetable extends Named {
@@ -19,21 +21,33 @@ interface Greetable extends Named {
 }
 
 class Person implements Greetable {
-    name: string;
+    name?: string;
     age = 30;
 
-    constructor(n: string){
-        this.name = n;
+    constructor(n?: string){
+        if(n){
+            this.name = n;
+        }
+
+        
     }
 
     greet(phrase: string) {
-        console.log(phrase + ' ' + this.name)
+        if(this.name){
+            console.log(phrase + ' ' + this.name)
+        } else {
+            console.log('Hi!')
+        }
+        
     }
 }
 
 let user1: Greetable;
 
-user1 = new Person('Jordan')
+//because the name is an optional property we are able to 
+// initialize a new Person without a name without getting 
+// an error
+user1 = new Person()
 
 user1.greet('Hi there - I am');
 console.log(user1);
