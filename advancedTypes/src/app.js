@@ -60,3 +60,21 @@ function useVehicle(vehicle) {
 }
 useVehicle(v1);
 useVehicle(v2);
+function moveAnimal(animal) {
+    // (animal instanceof Bird) doesnt work because you cant use
+    // instance of with interfaces
+    // if('flyingSpeed' in animal){
+    //     console.log('Moving with speed: ' + animal.flyingSpeed)
+    // }
+    //another way to do the above is to use literal types in our interfaces
+    var speed;
+    switch (animal.type) {
+        case 'bird':
+            speed = animal.flyingSpeed;
+            break;
+        case 'horse':
+            speed = animal.runningSpeed;
+    }
+    console.log('Moving with speed: ' + speed);
+}
+moveAnimal({ type: 'bird', flyingSpeed: 10 });
