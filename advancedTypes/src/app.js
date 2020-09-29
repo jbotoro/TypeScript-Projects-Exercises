@@ -78,3 +78,13 @@ function moveAnimal(animal) {
     console.log('Moving with speed: ' + speed);
 }
 moveAnimal({ type: 'bird', flyingSpeed: 10 });
+// const paragraph = document.querySelector('p');
+// const paragraph = document.getElementById('message-output');
+// const userInputValue = <HTMLInputElement>document.getElementById('user-input');
+// an alternative way to do the above can be done as seen below
+// using the as keyword
+// without using one of the two methods typescript will not allow for last line to work
+// because the value could return null
+// these additions ensure that the element will always be a HTMLInputElement
+var userInputValue = document.getElementById('user-input');
+userInputValue.value = 'Hi there!';
