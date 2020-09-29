@@ -1,3 +1,4 @@
+var _a;
 var e1 = {
     name: 'Jordan',
     privileges: ['create-server'],
@@ -12,6 +13,17 @@ function add(a, b) {
 }
 var result = add('Jordan', 'Black');
 result.split(' ');
+var fetchedUserData = {
+    id: 'u1',
+    name: 'Jordan',
+    job: { title: 'CEO', description: 'My own company' }
+};
+// syntax below is called optional chaining
+// basically performing if checks on the object 
+// checking if job exists in user data and if so checking if title exists
+// and then if it passes those if checks than it is logged to the console
+console.log((_a = fetchedUserData === null || fetchedUserData === void 0 ? void 0 : fetchedUserData.job) === null || _a === void 0 ? void 0 : _a.title);
+// console.log(fetchedUserData.job && fetchedUserData.job.title);
 // type UnknownEmployee = Employee | Admin;
 // function printEmployeeInformation(emp: UnknownEmployee) {
 //     console.log('Name: ' + emp.name)

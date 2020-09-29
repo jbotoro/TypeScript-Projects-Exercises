@@ -45,6 +45,20 @@ function add(a: Combinable, b: Combinable) {
 const result = add('Jordan', 'Black');
 result.split(' ');
 
+
+const fetchedUserData = {
+    id: 'u1',
+    name: 'Jordan',
+    job: {title: 'CEO', description: 'My own company'}
+};
+
+// syntax below is called optional chaining
+// basically performing if checks on the object 
+// checking if job exists in user data and if so checking if title exists
+// and then if it passes those if checks than it is logged to the console
+console.log(fetchedUserData?.job?.title);
+// console.log(fetchedUserData.job && fetchedUserData.job.title);
+
 // type UnknownEmployee = Employee | Admin;
 
 // function printEmployeeInformation(emp: UnknownEmployee) {
