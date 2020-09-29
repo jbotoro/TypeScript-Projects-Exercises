@@ -142,6 +142,19 @@ moveAnimal({type: 'bird', flyingSpeed: 10})
 // because the value could return null
 // these additions ensure that the element will always be a HTMLInputElement
 
-const userInputValue = document.getElementById('user-input')! as HTMLInputElement;
+const userInputValue = document.getElementById('user-input');
 
-userInputValue.value = 'Hi there!';
+if (userInputValue){
+    (userInputValue as HTMLInputElement).value = 'Hi there!';
+}
+
+
+interface ErrorContainer {
+    //{ email: 'Not a valid email', username: 'Must start' with a capital character!}
+    [prop : string]: string;
+}
+
+const errorBag: ErrorContainer = {
+    email: 'Not a valid email!',
+    username: 'Must start with a capital character!'
+};
