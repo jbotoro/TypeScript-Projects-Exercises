@@ -59,6 +59,23 @@ const fetchedUserData = {
 console.log(fetchedUserData?.job?.title);
 // console.log(fetchedUserData.job && fetchedUserData.job.title);
 
+// empty string is falsey so if using the code below
+// const storedData = userInput || 'DEFAULT';
+// we will always hit our default value if the input is an empty string
+
+
+const userInput = '';
+
+// nullish coalescing operator
+// if userInput is null or undefined we will use the default fallback
+// thus this operator provides a way to gracefull deal with nullish or undefined 
+// values such as when userInput is an empty string
+
+const storedData = userInput ?? 'DEFAULT';
+
+console.log(storedData);
+
+
 // type UnknownEmployee = Employee | Admin;
 
 // function printEmployeeInformation(emp: UnknownEmployee) {
