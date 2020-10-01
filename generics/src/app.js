@@ -85,9 +85,23 @@ console.log(textStorage.getItems());
 // additionally a union type could be used to offer additional type
 // flexibility 
 var numberStorage = new DataStorage();
-// const objStorage = new DataStorage<object>();
-// objStorage.addItem({name: 'Jordan'});
-// objStorage.addItem({name: 'Ashley'});
-// //...
-// objStorage.removeItem({name: 'Jordan'});
-// console.log(objStorage.getItems());
+// function createCourseGoal(title: string, description: string, date: Date): CourseGoal {
+//     return {title: title, description: description, completeUntil: date}
+// }
+function createCourseGoal(title, description, date) {
+    // partial sets it to a type where the properties are optional
+    // good to use when you want to temporarily allow for properties to be optional
+    var courseGoal = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completeUntil = date;
+    // cant return a partial type here at the end so must use as keyword
+    // we know all the properties have been added and thus we no longer need
+    // to use a partial type - even if we could return it without the error
+    return courseGoal;
+}
+// by using utility type Readonly you prevent writing to the string array
+// thus push and pop would no longer be allowed on our names array
+var names = ['Jordan', 'Anna'];
+// names.push('Jack');
+// names.pop();

@@ -121,3 +121,41 @@ const numberStorage = new DataStorage<number>();
 // objStorage.removeItem({name: 'Jordan'});
 
 // console.log(objStorage.getItems());
+
+// Generic Utility Types
+
+
+interface CourseGoal {
+    title: string;
+    description: string;
+    completeUntil: Date;
+}
+
+// function createCourseGoal(title: string, description: string, date: Date): CourseGoal {
+//     return {title: title, description: description, completeUntil: date}
+// }
+
+
+function createCourseGoal(
+    title: string, 
+    description: string, 
+    date: Date
+): CourseGoal {
+    // partial sets it to a type where the properties are optional
+    // good to use when you want to temporarily allow for properties to be optional
+
+    let courseGoal: Partial<CourseGoal> = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completeUntil = date;
+    // cant return a partial type here at the end so must use as keyword
+    // we know all the properties have been added and thus we no longer need
+    // to use a partial type - even if we could return it without the error
+    return courseGoal as CourseGoal;
+}
+
+// by using utility type Readonly you prevent writing to the string array
+// thus push and pop would no longer be allowed on our names array
+const names: Readonly<string[]> = ['Jordan', 'Anna'];
+// names.push('Jack');
+// names.pop();
