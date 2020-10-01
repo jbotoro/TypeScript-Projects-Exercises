@@ -159,3 +159,63 @@ function createCourseGoal(
 const names: Readonly<string[]> = ['Jordan', 'Anna'];
 // names.push('Jack');
 // names.pop();
+
+// Generic types vs Union types
+// Generic types are good for when you want to choose a type and stick to it
+// once your have chosen
+// Union types allow you to accept multiple types every time you call a function
+// or in this case make a DataStorage object and its data array
+
+// the code below uses generic types to ensure we choose either a string
+// number or boolean as the accept type for our DataStorage object
+// and the chosen type 'T' is then the only acceptable type of for any elements
+// in our data array
+
+// class DataStorage<T extends string | number | boolean> {
+//     private data: T[] = [];
+
+//     addItem(item: T) {
+//         this.data.push(item);
+//     }
+
+//     removeItem(item: T){
+//         // check to see if item exists, if not (i.e it returns -1)
+//         // we just return so as not to remove the wrong item
+
+//         if(this.data.indexOf(item) === -1){
+//             return;
+//         }
+//         this.data.splice(this.data.indexOf(item), 1);
+//     }
+
+//     getItems() {
+//         return [...this.data];
+//     }
+// }
+
+// If however we wanted different functionality that enabled you to 
+// instead allow for the data array to be a mixed array that allows
+// addition of strings numbers or booleans we could use a Union type instead
+// of the generic type used above
+
+// class DataStorage{
+//     private data: (string | number | boolean)[] = [];
+
+//     addItem(item: string | number | boolean) {
+//         this.data.push(item);
+//     }
+
+//     removeItem(item: string | number | boolean){
+//         // check to see if item exists, if not (i.e it returns -1)
+//         // we just return so as not to remove the wrong item
+
+//         if(this.data.indexOf(item) === -1){
+//             return;
+//         }
+//         this.data.splice(this.data.indexOf(item), 1);
+//     }
+
+//     getItems() {
+//         return [...this.data];
+//     }
+// }
