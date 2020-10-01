@@ -37,3 +37,8 @@ function countAndDescribe(element) {
     return [element, descriptionText];
 }
 console.log(countAndDescribe(['Soccer', 'LoL']));
+// using keyof constraint
+function extractAndConvert(obj, key) {
+    return 'Value: ' + obj[key];
+}
+extractAndConvert({ name: 'Jordan' }, 'name');
