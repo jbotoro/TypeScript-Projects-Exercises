@@ -37,7 +37,7 @@ function merge<T extends object, U extends object>(objA: T, objB: U){
 // const mergedObject = merge({name: 'Jordan', hobbies: ['Soccer']}, 31 );
 const mergedObject = merge({name: 'Jordan', hobbies: ['Soccer']}, { age: 31 });
 
-console.log(mergedObject)
+// console.log(mergedObject)
 
 
 // Another Generic function
@@ -56,7 +56,7 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
     return [element, descriptionText ]
 }
 
-console.log(countAndDescribe(['Soccer', 'LoL']));
+// console.log(countAndDescribe(['Soccer', 'LoL']));
 
 // using keyof constraint
 
@@ -65,3 +65,59 @@ function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) 
 }
 
 extractAndConvert({ name: 'Jordan' }, 'name');
+
+// by extending our DataStorage class to only accept
+// primitive types (so that our indexOf function works when removing an item)
+// to store objects we might consider using a more specialized class
+
+class DataStorage<T extends string | number | boolean> {
+    private data: T[] = [];
+
+    addItem(item: T) {
+        this.data.push(item);
+    }
+
+    removeItem(item: T){
+        // check to see if item exists, if not (i.e it returns -1)
+        // we just return so as not to remove the wrong item
+
+        if(this.data.indexOf(item) === -1){
+            return;
+        }
+        this.data.splice(this.data.indexOf(item), 1);
+    }
+
+    getItems() {
+        return [...this.data];
+    }
+}
+
+const textStorage = new DataStorage<string>();
+// by specifying the generic class to only store type string the below addition 
+// of a  number will not work
+
+// textStorage.addItem(10);
+
+textStorage.addItem('Jordan');
+textStorage.addItem('Ashley');
+textStorage.removeItem('Jordan');
+
+console.log(textStorage.getItems());
+
+// by using generic types we outline a clear distinct data storage object
+// to store strings in the first textStorage object
+// and a separate object numberStorage to only store numbers
+// additionally a union type could be used to offer additional type
+// flexibility 
+
+const numberStorage = new DataStorage<number>();
+
+// const objStorage = new DataStorage<object>();
+
+// objStorage.addItem({name: 'Jordan'});
+// objStorage.addItem({name: 'Ashley'});
+// //...
+
+// objStorage.removeItem({name: 'Jordan'});
+
+// console.log(objStorage.getItems());
