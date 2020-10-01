@@ -16,8 +16,14 @@
 // to an object with an age property(which is a number)
 // typescript then infers that the result type must the be combination of an object with a  number
 // property and an object with a string property
+// by using the extends objects in our generic types we avoid a silent failure
+// as seen in the  first version of mergedObject, without type constraints
+// typescript will not detect that 31 is a number not an object
+// and the function merge should only be merging objects
 function merge(objA, objB) {
     return Object.assign(objA, objB);
 }
-var mergedObject = (merge({ name: 'Jordan' }, { age: 31 }));
-console.log(mergedObject.age);
+// const mergedObject = merge({name: 'Jordan', hobbies: ['Soccer']}, 31 );
+var mergedObject = merge({ name: 'Jordan', hobbies: ['Soccer'] }, { age: 31 });
+console.log(mergedObject);
+// Working with Constraints
