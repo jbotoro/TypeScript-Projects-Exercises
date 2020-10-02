@@ -45,3 +45,33 @@ var Person = /** @class */ (function () {
 }());
 var pers = new Person();
 console.log(pers);
+//
+function Log(target, propertyName) {
+    console.log('Property decorator...');
+    console.log(target, propertyName);
+}
+var Product = /** @class */ (function () {
+    function Product(t, p) {
+        this.title = t;
+        this._price = p;
+    }
+    Object.defineProperty(Product.prototype, "price", {
+        set: function (val) {
+            if (val > 0) {
+                this._price = val;
+            }
+            else {
+                throw new Error('Invalid price - should be positive!');
+            }
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Product.prototype.getPriceWithTax = function (tax) {
+        return this._price * (1 + tax);
+    };
+    __decorate([
+        Log
+    ], Product.prototype, "title");
+    return Product;
+}());
