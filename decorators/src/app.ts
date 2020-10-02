@@ -13,13 +13,30 @@ function Logger(logString: string) {
         console.log(constructor)
     };
 }
+
+// more advanced types of decorator seen below
     
 
+function WithTemplate(template: string, hookId: string){
+    return function(constructor: any){
+        const hookEl = document.getElementById(hookId);
+        const p = new constructor();
+        if (hookEl){
+            hookEl.innerHTML = template;
+            hookEl.querySelector('h1')!.textContent = p.name;
+        }
+    }
+}
+
+// our with template decorator allows for addition of html to a certain
+// location in this case the div with the id of 'app'
+
+@WithTemplate('<h1> My Person Object </h1>', 'app')
 
 // by using factory function we can pass in a custom logging message
 // as seen below
 
-@Logger('LOGGIN - PERSON')
+// @Logger('LOGGIN - PERSON')
 class Person {
     name = 'Jordan';
 
