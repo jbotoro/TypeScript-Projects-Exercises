@@ -103,3 +103,8 @@ var Product = /** @class */ (function () {
     ], Product.prototype, "getPriceWithTax");
     return Product;
 }());
+// When do decorators execute?
+// Decorators execute when the class is defined, not when an instance of the class
+// is instantiated 
+var p1 = new Product('Book', 19);
+var p2 = new Product('Book2', 20);

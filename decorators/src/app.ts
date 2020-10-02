@@ -104,3 +104,10 @@ class Product {
         return this._price * (1 + tax);
     }
 }
+
+// When do decorators execute?
+// Decorators execute when the class is defined, not when an instance of the class
+// is instantiated 
+
+const p1 = new Product('Book', 19);
+const p2 = new Product('Book2', 20);
