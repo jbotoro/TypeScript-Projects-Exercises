@@ -10,6 +10,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // by converting our decorator function into a factory function
 // wee allow for further customization and reuseability
 function Logger(logString) {
+    console.log('LOGGER FACTORY');
     return function (constructor) {
         console.log(logString);
         console.log(constructor);
@@ -17,6 +18,7 @@ function Logger(logString) {
 }
 // more advanced types of decorator seen below
 function WithTemplate(template, hookId) {
+    console.log('TEMPLATE FACTORY');
     return function (constructor) {
         var hookEl = document.getElementById(hookId);
         var p = new constructor();
@@ -34,10 +36,10 @@ var Person = /** @class */ (function () {
         console.log('Creating person object...');
     }
     Person = __decorate([
+        Logger('LOGGIN - PERSON'),
         WithTemplate('<h1> My Person Object </h1>', 'app')
         // by using factory function we can pass in a custom logging message
         // as seen below
-        // @Logger('LOGGIN - PERSON')
     ], Person);
     return Person;
 }());

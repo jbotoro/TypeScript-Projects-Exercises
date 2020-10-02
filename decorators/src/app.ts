@@ -8,6 +8,7 @@
 // wee allow for further customization and reuseability
 
 function Logger(logString: string) {
+    console.log('LOGGER FACTORY')
     return function(constructor: Function){
         console.log(logString)
         console.log(constructor)
@@ -18,6 +19,7 @@ function Logger(logString: string) {
     
 
 function WithTemplate(template: string, hookId: string){
+    console.log('TEMPLATE FACTORY')
     return function(constructor: any){
         const hookEl = document.getElementById(hookId);
         const p = new constructor();
@@ -30,13 +32,13 @@ function WithTemplate(template: string, hookId: string){
 
 // our with template decorator allows for addition of html to a certain
 // location in this case the div with the id of 'app'
-
+@Logger('LOGGIN - PERSON')
 @WithTemplate('<h1> My Person Object </h1>', 'app')
 
 // by using factory function we can pass in a custom logging message
 // as seen below
 
-// @Logger('LOGGIN - PERSON')
+
 class Person {
     name = 'Jordan';
 
