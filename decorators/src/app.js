@@ -7,17 +7,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 // i.e. when the class is defined, not when it is instantiated
 // thus the logger function is logged before the creating person object
-function Logger(constructor) {
-    console.log('Logging...');
-    console.log(constructor);
+// by converting our decorator function into a factory function
+// wee allow for further customization and reuseability
+function Logger(logString) {
+    return function (constructor) {
+        console.log(logString);
+        console.log(constructor);
+    };
 }
+// by using factory function we can pass in a custom logging message
+// as seen below
 var Person = /** @class */ (function () {
     function Person() {
         this.name = 'Jordan';
         console.log('Creating person object...');
     }
     Person = __decorate([
-        Logger
+        Logger('LOGGIN - PERSON')
     ], Person);
     return Person;
 }());
