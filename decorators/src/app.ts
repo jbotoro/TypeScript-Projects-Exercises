@@ -18,14 +18,25 @@ function Logger(logString: string) {
 // more advanced types of decorator seen below
     
 
+// by returning a class in a class decorator we allow for the further
+// customization because we can add custom code inside our class 
+// to allows for the code to execute when the class is instantiated
+// rather than when it is defined as it was previously.
+
 function WithTemplate(template: string, hookId: string){
     console.log('TEMPLATE FACTORY')
-    return function(constructor: any){
-        const hookEl = document.getElementById(hookId);
-        const p = new constructor();
-        if (hookEl){
-            hookEl.innerHTML = template;
-            hookEl.querySelector('h1')!.textContent = p.name;
+    return function<T extends { new (...args: any[]): {name: string} }>(
+        originalConstructor: T
+        ) {
+        return class extends originalConstructor {
+            constructor(..._: any[]) {
+                super();
+                const hookEl = document.getElementById(hookId);
+                if (hookEl){
+                    hookEl.innerHTML = template;
+                    hookEl.querySelector('h1')!.textContent = this.name;
+                }
+            }
         }
     }
 }
