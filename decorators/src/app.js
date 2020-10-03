@@ -136,3 +136,30 @@ var Product = /** @class */ (function () {
 // is instantiated 
 var p1 = new Product('Book', 19);
 var p2 = new Product('Book2', 20);
+function Autobind(_, _2, descriptor) {
+    var originalMethod = descriptor.value;
+    var adjDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get: function () {
+            var boundFn = originalMethod.bind(this);
+            return boundFn;
+        }
+    };
+    return adjDescriptor;
+}
+var Printer = /** @class */ (function () {
+    function Printer() {
+        this.message = 'This works!';
+    }
+    Printer.prototype.showMessage = function () {
+        console.log(this.message);
+    };
+    __decorate([
+        Autobind
+    ], Printer.prototype, "showMessage");
+    return Printer;
+}());
+var p = new Printer();
+var button = document.querySelector('button');
+button.addEventListener('click', p.showMessage);
