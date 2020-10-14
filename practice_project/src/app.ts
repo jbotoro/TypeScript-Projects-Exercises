@@ -1,3 +1,18 @@
+// Drag and Drop Interfaces
+
+interface Draggable {
+    dragStartHandler(event: DragEvent): void;
+    dragEndHandler(event: DragEvent): void;
+}
+
+interface DragTarget {
+    dragOverHandler(event: DragEvent): void;
+    dropHandler(event: DragEvent): void;
+    dragLeaveHandler(event: DragEvent): void;
+}
+
+
+
 // Project Type
 
 enum ProjectStatus { Active, Finished}
@@ -174,82 +189,93 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 
 // ProjectItem Class
 
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
-    private project: Project;
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> 
+    implements Draggable {
+        private project: Project;
 
-    get persons() {
-        if (this.project.people === 1){
-            return '1 person'
-        } else {
-            return `${this.project.people} persons`;
+        get persons() {
+            if (this.project.people === 1){
+                return '1 person'
+            } else {
+                return `${this.project.people} persons`;
+            }
         }
-    }
-    
-    constructor(hostId: string, project: Project){
-        super('single-project', hostId, false, project.id)
-        this.project = project;
-
-        this.configure();
-        this.renderContent();
-    }
-
-    configure() {
-
-    }
-
-    renderContent() {
-        this.element.querySelector('h2')!.textContent = this.project.title;
-        this.element.querySelector(
-            'h3'
-        )!.textContent = this.persons + ' assigned.';
-        this.element.querySelector('p')!.textContent = this.project.description;
-    }
-}
-
-// ProjectList Class
-
-class ProjectList extends Component<HTMLDivElement, HTMLElement> {
-    
-    assignedProjects: Project[];
-    
-    constructor(private type: 'active' | 'finished') {
-        super('project-list', 'app', false, `${type}-projects`);
         
-        this.hostElement = document.getElementById('app')! as HTMLDivElement;
-        this.assignedProjects = [];
+        constructor(hostId: string, project: Project){
+            super('single-project', hostId, false, project.id)
+            this.project = project;
 
-        this.configure();
-        this.renderContent();
-    }
+            this.configure();
+            this.renderContent();
+        }
 
-    configure(){
-        projectState.addListener((projects: Project[]) => {
-            const relevantProjects = projects.filter(prj => {
-                if (this.type === 'active'){
-                    return prj.status === ProjectStatus.Active
-                } 
-                return prj.status === ProjectStatus.Finished;
-                
-            })
-            this.assignedProjects = relevantProjects;
-            this.renderProjects();
-        });
-    }
+        @autobind
+        dragStartHandler(event: DragEvent) {
+            console.log(event);
+        }
 
-    renderContent() {
-        const listId = `${this.type}-projects-list`;
-        this.element.querySelector('ul')!.id = listId;
-        this.element.querySelector('h2')!.textContent = 
-            this.type.toUpperCase() + ' PROJECTS'
-    }
+        dragEndHandler(_: DragEvent) {
+            console.log('DragEnd')
+        }
 
-    private renderProjects() {
-        const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
-        listEl.innerHTML = '';
-        for (const prjItem of this.assignedProjects){
-            new ProjectItem(this.element.querySelector('ul')!.id, prjItem);
+        configure() {
+            this.element.addEventListener('dragstart', this.dragStartHandler)
+            this.element.addEventListener('dragend', this.dragEndHandler)
+        }
+
+        renderContent() {
+            this.element.querySelector('h2')!.textContent = this.project.title;
+            this.element.querySelector(
+                'h3'
+            )!.textContent = this.persons + ' assigned.';
+            this.element.querySelector('p')!.textContent = this.project.description;
         }
     }
+
+    // ProjectList Class
+
+    class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+        
+        assignedProjects: Project[];
+        
+        constructor(private type: 'active' | 'finished') {
+            super('project-list', 'app', false, `${type}-projects`);
+            
+            this.hostElement = document.getElementById('app')! as HTMLDivElement;
+            this.assignedProjects = [];
+
+            this.configure();
+            this.renderContent();
+        }
+
+        configure(){
+            projectState.addListener((projects: Project[]) => {
+                const relevantProjects = projects.filter(prj => {
+                    if (this.type === 'active'){
+                        return prj.status === ProjectStatus.Active
+                    } 
+                    return prj.status === ProjectStatus.Finished;
+                    
+                })
+                this.assignedProjects = relevantProjects;
+                this.renderProjects();
+            });
+        }
+
+        renderContent() {
+            const listId = `${this.type}-projects-list`;
+            this.element.querySelector('ul')!.id = listId;
+            this.element.querySelector('h2')!.textContent = 
+                this.type.toUpperCase() + ' PROJECTS'
+        }
+
+        private renderProjects() {
+            const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+            listEl.innerHTML = '';
+            for (const prjItem of this.assignedProjects){
+                new ProjectItem(this.element.querySelector('ul')!.id, prjItem);
+            }
+        }
 }
 
 
